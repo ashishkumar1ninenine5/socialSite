@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+from typing import Optional
 from ...infrastructure.database import get_db
 from ...application.meme.service import MemeService
 
@@ -7,11 +9,18 @@ router = APIRouter(prefix="/memes", tags=["memes"])
 def get_database():
     return get_db()
 
+class MemeCreate(BaseModel):
+    author_id: str
+    caption: str
+    media_url: str
+    hashtags: str = ""
+
+
 @router.post("/")
-def create_meme(author_id: str, caption: str, media_url: str, hashtags: str = "", db = Depends(get_database)):
+def create_meme(meme: MemeCreate, db = Depends(get_database)):
     service = MemeService(db)
-    meme = service.create_meme(author_id, caption, hashtags, media_url)
-    return {"id": str(meme["_id"])}
+    created = service.create_meme(meme.author_id, meme.caption, meme.hashtags, meme.media_url)
+    return {"id": str(created["_id"])}
 
 @router.get("/")
 def list_memes(db = Depends(get_database)):
@@ -32,7 +41,7 @@ def unlike_meme(meme_id: str, user_id: str, db = Depends(get_database)):
     return {"message": "unliked"}
 
 @router.post("/{meme_id}/comment")
-def comment_meme(meme_id: str, user_id: str, text: str, parent_id: str | None = None, db = Depends(get_database)):
+def comment_meme(meme_id: str, user_id: str, text: str, parent_id: Optional[str] = None, db = Depends(get_database)):
     service = MemeService(db)
     comment = service.comment(user_id, meme_id, text, parent_id)
     return {"id": str(comment["_id"])}
