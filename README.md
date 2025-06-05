@@ -8,14 +8,14 @@ backend/
   app/
     api/          - FastAPI routers
     application/  - Business logic services
-    domain/       - ORM models and repositories
-    infrastructure/ - Database setup
+    domain/       - Pydantic models and repositories
+    infrastructure/ - MongoDB setup
     main.py       - FastAPI application entrypoint
-frontend/         - (placeholder for Next.js app)
+frontend/         - Next.js app
 ```
 
 ## Backend
-Install dependencies and run the API server:
+Install dependencies and run the API server (requires a running MongoDB instance):
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -24,6 +24,11 @@ uvicorn app.main:app --reload
 The API will be available at `http://localhost:8000` with automatic Swagger docs at `/docs`.
 
 ## Frontend
-A minimal Next.js app can be added under `frontend/`. You can generate one with `npx create-next-app` or integrate an existing frontend later.
+A minimal Next.js app lives under `frontend/`. Install dependencies and start the dev server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 This skeleton only includes a simple user signup and login endpoint as a starting point for implementing the rest of the features described in the project overview.

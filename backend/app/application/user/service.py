@@ -1,11 +1,10 @@
 from passlib.context import CryptContext
-from sqlalchemy.orm import Session
 from ...domain.user.repository import UserRepository
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class UserService:
-    def __init__(self, db: Session):
+    def __init__(self, db):
         self.repo = UserRepository(db)
 
     def create_user(self, email: str, password: str, full_name: str | None = None):
@@ -16,6 +15,6 @@ class UserService:
         user = self.repo.get_by_email(email)
         if not user:
             return None
-        if not pwd_context.verify(password, user.hashed_password):
+        if not pwd_context.verify(password, user["hashed_password"]):
             return None
         return user
