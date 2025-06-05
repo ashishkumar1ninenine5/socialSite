@@ -15,13 +15,13 @@ frontend/         - Next.js app
 ```
 
 ## Backend
-Install dependencies and run the API server (requires a running MongoDB instance):
+Install dependencies and run the API server (requires a running MongoDB instance). The server port can be changed via the `PORT` environment variable (default `8080`):
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+python -m app.main
 ```
-The API will be available at `http://localhost:8000` with automatic Swagger docs at `/docs`.
+The API will be available at `http://localhost:8080` (or your chosen `PORT`) with automatic Swagger docs at `/docs`.
 
 ## Frontend
 A minimal Next.js app lives under `frontend/`. Install dependencies and start the dev server:
@@ -31,4 +31,4 @@ npm install
 npm run dev
 ```
 
-This skeleton only includes a simple user signup and login endpoint as a starting point for implementing the rest of the features described in the project overview.
+The backend now exposes additional endpoints for profiles, following, meme posting and engagement (likes, comments and bookmarks) as well as a simple search and admin interface.
