@@ -1,10 +1,18 @@
 # Next.js Frontend
 
-This folder contains a very small Next.js application used to demonstrate the frontend of the meme social media platform. Run the development server with:
+This folder contains a small Next.js application that works with the FastAPI backend.
+Run the development server with:
 
 ```bash
 npm install
 npm run dev
 ```
 
-You can expand this app to implement the full user interface.
+The app provides basic Instagram‑style features:
+
+- Sign up and sign in forms using the backend authentication endpoints
+- A feed displaying memes from `/memes`
+- Profile pages under `/profile/[id]`
+- A simple form to upload new posts
+
+Set the backend URL via the `NEXT_PUBLIC_API_URL` environment variable (defaults to `http://localhost:8080`).
