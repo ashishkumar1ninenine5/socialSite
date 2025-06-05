@@ -1,9 +1,10 @@
-# Next.js Frontend (Placeholder)
+# Next.js Frontend
 
-This folder is intended for a future Next.js application. You can bootstrap a new app with:
+This folder contains a very small Next.js application used to demonstrate the frontend of the meme social media platform. Run the development server with:
 
 ```bash
-npx create-next-app@latest .
+npm install
+npm run dev
 ```
 
-Then implement the user interface for the meme social media platform.
+You can expand this app to implement the full user interface.

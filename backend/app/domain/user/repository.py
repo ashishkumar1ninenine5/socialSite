@@ -1,16 +1,12 @@
-from sqlalchemy.orm import Session
-from .models import User
-
 class UserRepository:
-    def __init__(self, db: Session):
-        self.db = db
+    def __init__(self, db):
+        self.collection = db["users"]
 
     def get_by_email(self, email: str):
-        return self.db.query(User).filter(User.email == email).first()
+        return self.collection.find_one({"email": email})
 
-    def create(self, email: str, hashed_password: str, full_name: str | None = None) -> User:
-        user = User(email=email, hashed_password=hashed_password, full_name=full_name)
-        self.db.add(user)
-        self.db.commit()
-        self.db.refresh(user)
+    def create(self, email: str, hashed_password: str, full_name: str | None = None):
+        user = {"email": email, "hashed_password": hashed_password, "full_name": full_name}
+        result = self.collection.insert_one(user)
+        user["_id"] = result.inserted_id
         return user
