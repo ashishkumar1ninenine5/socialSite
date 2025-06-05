@@ -28,3 +28,13 @@ export async function getProfile(id) {
   const res = await api.get(`/profile/${id}`);
   return res.data;
 }
+
+export async function likeMeme(id, user_id) {
+  const res = await api.post(`/memes/${id}/like`, null, { params: { user_id } });
+  return res.data;
+}
+
+export async function unlikeMeme(id, user_id) {
+  const res = await api.delete(`/memes/${id}/like`, { params: { user_id } });
+  return res.data;
+}

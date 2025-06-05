@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from typing import Optional
 from ...infrastructure.database import get_db
 from ...application.user.service import UserService
 
@@ -8,7 +9,7 @@ def get_database():
     return get_db()
 
 @router.post("/signup")
-def signup(email: str, password: str, full_name: str | None = None, db = Depends(get_database)):
+def signup(email: str, password: str, full_name: Optional[str] = None, db = Depends(get_database)):
     service = UserService(db)
     existing = service.repo.get_by_email(email)
     if existing:

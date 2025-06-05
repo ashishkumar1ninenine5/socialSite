@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from typing import Optional
 from ...infrastructure.database import get_db
 from ...application.user.service import UserService
 
@@ -22,7 +23,7 @@ def get_profile(user_id: str, db = Depends(get_database)):
     }
 
 @router.put("/{user_id}")
-def update_profile(user_id: str, bio: str | None = None, avatar: str | None = None, db = Depends(get_database)):
+def update_profile(user_id: str, bio: Optional[str] = None, avatar: Optional[str] = None, db = Depends(get_database)):
     service = UserService(db)
     update = {}
     if bio is not None:
